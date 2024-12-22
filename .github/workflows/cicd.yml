@@ -1,0 +1,28 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Log in to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build Docker image
+        run: docker build -t nipunagarwal/summariser-backend .
+      - name: Push Docker image
+        run: docker push nipunagarwal/summariser-backend:latest
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Pull Docker image from Docker Hub
+        run: docker pull nipunagarwal/summariser-backend:latest
+      - name: Run Docker container
+        run: docker run -d -p 5000:5000 --name nipunagarwal/summariser-backend:latest -e MONGODB_URL='{{ secrets.MONGODB_URL }}' JWT_SECRET='{{ secrets.JWT_SECRET }}' NODE_ENV='{{ secrets.NODE_ENV }}' HUGGINGFACE_API_KEY='{{ secrets.HUGGINGFACE_API_KEY }}' nipunagarwal/summariser-backend
