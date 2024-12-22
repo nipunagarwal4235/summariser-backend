@@ -25,4 +25,10 @@ jobs:
       - name: Pull Docker image from Docker Hub
         run: docker pull nipunagarwal/summariser-backend:latest
       - name: Run Docker container
-        run: docker run -d -p 5000:5000 --name nipunagarwal/summariser-backend:latest -e MONGODB_URL='{{ secrets.MONGODB_URL }}' JWT_SECRET='{{ secrets.JWT_SECRET }}' NODE_ENV='{{ secrets.NODE_ENV }}' HUGGINGFACE_API_KEY='{{ secrets.HUGGINGFACE_API_KEY }}' nipunagarwal/summariser-backend
+        run: docker run -d -p 5000:5000 \
+          --name summariser-backend \
+          -e MONGODB_URL='your_mongodb_url' \
+          -e JWT_SECRET='your_jwt_secret' \
+          -e NODE_ENV='your_node_env' \
+          -e HUGGINGFACE_API_KEY='your_huggingface_api_key' \
+          nipunagarwal/summariser-backend
