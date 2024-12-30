@@ -14,6 +14,7 @@ connectDB();
 
 const allowedOrigins = [
   "http://localhost:5173", // React  app
+  "http://13.60.2.29:5173",
 ];
 
 app.use(express.json());
