@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.resend.com",
+  host: "smtp.zoho.in",
   port: 465,
   secure: true,
   auth: {

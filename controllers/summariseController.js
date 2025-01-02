@@ -29,7 +29,6 @@ export const getSummariesController = async (req, res) => {
   try {
     const { userId } = req.body;
     const summaries = await summaryModel.find({ userId });
-    console.log("summaries", summaries);
     return res.json({ success: true, summaries });
   } catch (error) {
     console.error("Error fetching summaries:", error);
